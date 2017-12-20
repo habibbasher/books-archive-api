@@ -1,11 +1,16 @@
+/**
+ * Importing node modules
+ */
 import express from 'express';
 const router = express.Router();
-
+/**
+ * Importing custom modules
+ */
 import User from '../models/User';
 
 router.post("/", (req, res) => {
   const { credentials } = req.body;
-  User.findOneAsync({ email: credentials.email }).then((user) => {
+  User.findOne({ email: credentials.email }).then((user) => {
     if (user && user.isValidPassword(credentials.password)) {
       res.status(200).json({ user: user.toAuthJSON() });
     } else {
@@ -15,6 +20,5 @@ router.post("/", (req, res) => {
   });
 
 });
-
 
 export default router;
