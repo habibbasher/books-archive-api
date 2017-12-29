@@ -26,7 +26,7 @@ schema.methods.setPassword = function setPassword(password) {
   this.passwordHash = bcrypt.hashSync(password, 10);
 }
 
-schema.methods.setConfirmationToken = function setConfirmationToken(password) {
+schema.methods.setConfirmationToken = function setConfirmationToken() {
   this.confirmationToken = this.generateJWT();
 }
 
@@ -37,7 +37,8 @@ schema.methods.generateConfirmationUrl = function generateConfirmationUrl() {
 schema.methods.generateJWT = function generateJWT() {
   return jwt.sign(
     {
-      email: this.email
+      email: this.email,
+      confirmed: this.confirmed
     },
     process.env.JWT_SECRET,
     {
